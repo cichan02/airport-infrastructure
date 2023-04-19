@@ -4,5 +4,5 @@ metadata:
   name: mail-service-configmap
   namespace: default
 data:
-  KAFKA_HOST: "kafka-cluster"
+  KAFKA_HOST: "kafka-cluster-kafka-bootstrap"
   AUTH_HOST: "auth-service"
