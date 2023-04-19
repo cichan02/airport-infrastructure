@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: airline-service
+  namespace: default
+  labels:
+    app: airline-service
+    service: airline-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: airline-service
+  ports:
+    - name: airline-service
+      port: 8080
+      targetPort: 8084

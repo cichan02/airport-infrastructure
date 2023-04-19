@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airline-service-v1
+  namespace: default
+  labels:
+    app: airline-service
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: airline-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: airport
+        version: v1
+    spec:
+      containers:
+        - name: airline-service
+          image: cichan/airline-service:prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8084
+          env:
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_PORT
+            - name: POSTGRES_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_SCHEMA
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_DB
+            - name: POSTGRES_URL
+              value: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?currentSchema=${POSTGRES_SCHEMA}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: LIQUIBASE_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: airline-service-configmap
+                  key: LIQUIBASE_SCHEMA
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: airline-service-configmap
+                  key: KAFKA_HOST
