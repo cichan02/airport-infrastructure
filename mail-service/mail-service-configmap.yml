@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mail-service-configmap
+data:
+  KAFKA_HOST: "kafka-cluster"
+  AUTH_HOST: "authentication-service"

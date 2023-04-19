@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-service-v1
+  namespace: default
+  labels:
+    app: mail-service
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mail-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mail-service
+        version: v1
+    spec:
+      containers:
+        - name: mail-service
+          image: cichan/mail-service:prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+          env:
+            - name: GMAIL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mail-service-secret
+                  key: GMAIL_USER
+            - name: GMAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mail-service-secret
+                  key: GMAIL_PASSWORD
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mail-service-configmap
+                  key: KAFKA_HOST
+            - name: AUTH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mail-service-configmap
+                  key: AUTH_HOST
