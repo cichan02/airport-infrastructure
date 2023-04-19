@@ -21,7 +21,7 @@ spec:
       containers:
         - name: airport-location
           image: cichan/micro-airport-location:prod
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
