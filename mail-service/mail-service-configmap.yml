@@ -4,4 +4,4 @@ metadata:
   name: mail-service-configmap
 data:
   KAFKA_HOST: "kafka-cluster"
-  AUTH_HOST: "authentication-service"
+  AUTH_HOST: "auth-service"
