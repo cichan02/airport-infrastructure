@@ -9,6 +9,8 @@ metadata:
 spec:
   serviceName: mongo
   replicas: 3
+  updateStrategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: mongo

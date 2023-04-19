@@ -7,10 +7,10 @@ metadata:
     app: airport-location
     service: airport-location
 spec:
+  type: LoadBalancer
   selector:
     app: airport-location
   ports:
     - name: airport-location
       port: 8080
       targetPort: 8080
-  type: LoadBalancer
