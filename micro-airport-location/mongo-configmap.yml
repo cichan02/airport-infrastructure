@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-configmap
+data:
+  MONGO_AUTH_DB: "admin"
+  MONGO_DB: "micro-airport-location"
