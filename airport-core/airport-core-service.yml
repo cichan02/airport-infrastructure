@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: airport-core
+  namespace: default
+  labels:
+    app: airport-core
+    service: airport-core
+spec:
+  type: LoadBalancer
+  selector:
+    app: airport-core
+  ports:
+    - name: airport-core
+      port: 8080
+      targetPort: 8081

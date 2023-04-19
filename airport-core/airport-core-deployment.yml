@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airport-core-v1
+  namespace: default
+  labels:
+    app: airport-core
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: airport-core
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: airport
+    spec:
+      containers:
+        - name: airport-core
+          image: cichan/micro-airport-core:prod
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          env:
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_HOST
+            - name: POSTGRES_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_SCHEMA
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_DB
+            - name: POSTGRES_URL
+              value: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}?currentSchema=${POSTGRES_SCHEMA}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: LIQUIBASE_SCHEMA
+              value: public
+            - name: KAFKA_HOST
+              value: kafka-cluster
+            - name: AIRPORT_LOCATION_HOST
+              value: airport-location
