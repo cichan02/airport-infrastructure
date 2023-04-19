@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: airline-postgres
+  namespace: default
+  labels:
+    app: airline-postgres
+    version: v1
+spec:
+  serviceName: airline-postgres
+  replicas: 3
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: airline-postgres
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: airline-postgres
+        version: v1
+    spec:
+      containers:
+        - name: airline-postgres
+          image: postgres:15.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5433
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: airline-POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: airline-postgres-data
+              mountPath: /data/db
+            - name: airline-postgres-config
+              mountPath: /data/config
+  volumeClaimTemplates:
+    - metadata:
+        name: airline-postgres-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: "standard"
+    - metadata:
+        name: airline-postgres-config
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
