@@ -16,11 +16,12 @@ spec:
     metadata:
       labels:
         app: airport
+        version: v1
     spec:
       containers:
         - name: airport-core
           image: cichan/micro-airport-core:prod
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8081
           env:
@@ -52,8 +53,17 @@ spec:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
             - name: LIQUIBASE_SCHEMA
-              value: public
+              valueFrom:
+                configMapKeyRef:
+                  name: airport-core-configmap
+                  key: LIQUIBASE_SCHEMA
             - name: KAFKA_HOST
-              value: kafka-cluster
+              valueFrom:
+                configMapKeyRef:
+                  name: airport-core-configmap
+                  key: KAFKA_HOST
             - name: AIRPORT_LOCATION_HOST
-              value: airport-location
+              valueFrom:
+                configMapKeyRef:
+                  name: airport-core-configmap
+                  key: AIRPORT_LOCATION_HOST
