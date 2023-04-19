@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres
+  name: core-postgres
   namespace: default
   labels:
-    app: postgres
+    app: core-postgres
     version: v1
 spec:
-  serviceName: postgres
+  serviceName: core-postgres
   replicas: 3
   updateStrategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: postgres
+      app: core-postgres
       version: v1
   template:
     metadata:
       labels:
-        app: postgres
+        app: core-postgres
         version: v1
     spec:
       containers:
-        - name: postgres
+        - name: core-postgres
           image: postgres:15.2
           imagePullPolicy: IfNotPresent
           ports:
@@ -39,13 +39,13 @@ spec:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
           volumeMounts:
-            - name: postgres-data
+            - name: core-postgres-data
               mountPath: /data/db
-            - name: postgres-config
+            - name: core-postgres-config
               mountPath: /data/config
   volumeClaimTemplates:
     - metadata:
-        name: postgres-data
+        name: core-postgres-data
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
@@ -53,7 +53,7 @@ spec:
             storage: 10Gi
         storageClassName: "standard"
     - metadata:
-        name: postgres-config
+        name: core-postgres-config
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
