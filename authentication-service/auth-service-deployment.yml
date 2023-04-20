@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: cichan/authentication-service:prod
+          image: cichan/authentication-service:0.1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8083
