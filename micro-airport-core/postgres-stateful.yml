@@ -24,7 +24,7 @@ spec:
       containers:
         - name: core-postgres
           image: postgres:15.2
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 5432
           env:
