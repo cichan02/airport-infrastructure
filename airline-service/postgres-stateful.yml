@@ -24,7 +24,7 @@ spec:
       containers:
         - name: airline-postgres
           image: postgres:15.2
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 5433
           env:
