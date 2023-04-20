@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: airline-service
-          image: cichan/airline-service:prod
+          image: cichan/airline-service:0.1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8084
