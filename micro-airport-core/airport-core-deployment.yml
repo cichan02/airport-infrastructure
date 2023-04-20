@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: airport-core
-          image: cichan/micro-airport-core:prod
+          image: cichan/micro-airport-core:0.1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
