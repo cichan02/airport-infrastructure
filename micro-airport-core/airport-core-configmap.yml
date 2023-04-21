@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airport-core-configmap
+  namespace: default
+data:
+  LIQUIBASE_SCHEMA: "public"
+  KAFKA_HOST: "kafka-cluster-kafka-bootstrap"
+  AIRPORT_LOCATION_HOST: "airport-location"

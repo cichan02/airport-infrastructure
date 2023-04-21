@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: core-postgres
+  namespace: default
+  labels:
+    app: core-postgres
+    version: v1
+spec:
+  serviceName: core-postgres
+  replicas: 3
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: core-postgres
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: core-postgres
+        version: v1
+    spec:
+      containers:
+        - name: core-postgres
+          image: postgres:15.2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: core-postgres-data
+              mountPath: /data/db
+            - name: core-postgres-config
+              mountPath: /data/config
+  volumeClaimTemplates:
+    - metadata:
+        name: core-postgres-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: "standard"
+    - metadata:
+        name: core-postgres-config
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

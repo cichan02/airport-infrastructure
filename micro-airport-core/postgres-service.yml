@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: core-postgres
+  namespace: default
+  labels:
+    app: core-postgres
+    service: core-postgres
+spec:
+  type: ClusterIP
+  selector:
+    app: core-postgres
+  ports:
+    - name: core-postgres
+      port: 5432
+      targetPort: 5432
