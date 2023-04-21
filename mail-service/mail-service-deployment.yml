@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: mail-service
-          image: cichan/mail-service:prod
+          image: cichan/mail-service:0.1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8082
