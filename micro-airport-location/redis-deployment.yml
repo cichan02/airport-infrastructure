@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-v1
+  namespace: default
+  labels:
+    app: redis
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: redis
+        version: v1
+    spec:
+      containers:
+        - name: redis
+          image: redis:6.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data/db
+            - name: redis-config
+              mountPath: /data/config
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-data
+        - name: redis-config
+          persistentVolumeClaim:
+            claimName: redis-config

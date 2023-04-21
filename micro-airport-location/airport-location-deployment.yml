@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airport-location-v1
+  namespace: default
+  labels:
+    app: airport-location
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: airport-location
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: airport-location
+        version: v1
+    spec:
+      containers:
+        - name: airport-location
+          image: cichan/micro-airport-location:0.1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: MONGO_HOST
+            - name: MONGO_AUTH_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: MONGO_AUTH_DB
+            - name: MONGO_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: MONGO_DB
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_USER
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_PASSWORD
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: redis-configmap
+                  key: REDIS_HOST
