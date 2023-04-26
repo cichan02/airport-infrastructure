@@ -7,3 +7,5 @@ data:
   LIQUIBASE_SCHEMA: "public"
   KAFKA_HOST: "kafka-cluster-kafka-bootstrap"
   AIRPORT_LOCATION_HOST: "airport-location"
+  AUTH_HOST: "auth-service"
+  AIRLINE_HOST: "airline-service"
