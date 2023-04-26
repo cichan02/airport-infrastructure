@@ -5,3 +5,4 @@ metadata:
   namespace: default
 data:
   KAFKA_HOST: "kafka-cluster-kafka-bootstrap"
+  AIRPORT_CORE_HOST: "airport-core"
