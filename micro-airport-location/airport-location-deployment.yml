@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: airport-location
-          image: cichan/micro-airport-location:0.1.1
+          image: cichan/micro-airport-location:0.1.2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -30,6 +30,11 @@ spec:
                 configMapKeyRef:
                   name: mongo-configmap
                   key: MONGO_HOST
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: MONGO_PORT
             - name: MONGO_AUTH_DB
               valueFrom:
                 configMapKeyRef:
