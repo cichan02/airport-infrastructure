@@ -20,10 +20,10 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: cichan/authentication-service:0.1.0
+          image: cichan/authentication-service:0.1.1
           imagePullPolicy: Always
           ports:
-            - containerPort: 8083
+            - containerPort: 8080
           env:
             - name: KAFKA_HOST
               valueFrom:

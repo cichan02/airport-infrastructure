@@ -4,5 +4,5 @@ metadata:
   name: airline-service-configmap
   namespace: default
 data:
-  LIQUIBASE_SCHEMA: "public"
+  LIQUIBASE_LIQUIBASE_SCHEMA_NAME: "public"
   KAFKA_HOST: "kafka-cluster-kafka-bootstrap"
