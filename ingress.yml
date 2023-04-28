@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingressgateway
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "istio"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /airports
+            pathType: Prefix
+            backend:
+              service:
+                name: airport-location
+                port:
+                  number: 8080
+          - path: /cities
+            pathType: Prefix
+            backend:
+              service:
+                name: airport-location
+                port:
+                  number: 8080
+          - path: /countries
+            pathType: Prefix
+            backend:
+              service:
+                name: airport-location
+                port:
+                  number: 8080
