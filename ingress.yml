@@ -30,3 +30,73 @@ spec:
                 name: airport-location
                 port:
                   number: 8080
+          - path: /airplanes
+            pathType: Prefix
+            backend:
+              service:
+                name: airport-core
+                port:
+                  number: 8080
+          - path: /flights
+            pathType: Prefix
+            backend:
+              service:
+                name: airport-core
+                port:
+                  number: 8080
+          - path: /tickets
+            pathType: Prefix
+            backend:
+              service:
+                name: airport-core
+                port:
+                  number: 8080
+          - path: /users
+            pathType: Prefix
+            backend:
+              service:
+                name: airport-core
+                port:
+                  number: 8080
+          - path: /refresh
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 8080
+          - path: /password
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 8080
+          - path: /extract-username
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 8080
+          - path: /valid-access-token
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 8080
+          - path: /generate-token
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 8080
+          - path: /airlines
+            pathType: Prefix
+            backend:
+              service:
+                name: airline-service
+                port:
+                  number: 8080
