@@ -7,10 +7,10 @@ metadata:
     app: mail-service
     service: mail-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: mail-service
   ports:
     - name: mail-service
       port: 8080
-      targetPort: 8082
+      targetPort: 8080

@@ -7,10 +7,10 @@ metadata:
     app: airline-service
     service: airline-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: airline-service
   ports:
     - name: airline-service
       port: 8080
-      targetPort: 8084
+      targetPort: 8080

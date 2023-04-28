@@ -7,10 +7,10 @@ metadata:
     app: airport-core
     service: airport-core
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: airport-core
   ports:
     - name: airport-core
       port: 8080
-      targetPort: 8081
+      targetPort: 8080

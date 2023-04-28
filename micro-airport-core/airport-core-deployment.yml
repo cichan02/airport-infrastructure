@@ -15,48 +15,53 @@ spec:
   template:
     metadata:
       labels:
-        app: airport
+        app: airport-core
         version: v1
     spec:
       containers:
         - name: airport-core
-          image: cichan/micro-airport-core:0.1.0
+          image: cichan/micro-airport-core:0.1.1
           imagePullPolicy: Always
           ports:
-            - containerPort: 8081
+            - containerPort: 8080
           env:
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-configmap
+                  name: postgres-core-configmap
                   key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-core-configmap
+                  key: POSTGRES_PORT
             - name: POSTGRES_SCHEMA
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-configmap
+                  name: postgres-core-configmap
                   key: POSTGRES_SCHEMA
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-configmap
+                  name: postgres-core-configmap
                   key: POSTGRES_DB
             - name: POSTGRES_URL
-              value: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}?currentSchema=${POSTGRES_SCHEMA}
+              value: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?currentSchema=${POSTGRES_SCHEMA}
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: postgres-core-secret
                   key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: postgres-core-secret
                   key: POSTGRES_PASSWORD
-            - name: LIQUIBASE_SCHEMA
+            - name: LIQUIBASE_LIQUIBASE_SCHEMA_NAME
               valueFrom:
                 configMapKeyRef:
                   name: airport-core-configmap
-                  key: LIQUIBASE_SCHEMA
+                  key: LIQUIBASE_LIQUIBASE_SCHEMA_NAME
             - name: KAFKA_HOST
               valueFrom:
                 configMapKeyRef:
@@ -67,3 +72,13 @@ spec:
                 configMapKeyRef:
                   name: airport-core-configmap
                   key: AIRPORT_LOCATION_HOST
+            - name: AUTH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: airport-core-configmap
+                  key: AUTH_HOST
+            - name: AIRLINE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: airport-core-configmap
+                  key: AIRLINE_HOST

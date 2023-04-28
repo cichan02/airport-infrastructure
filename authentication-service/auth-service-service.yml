@@ -7,10 +7,10 @@ metadata:
     app: auth-service
     service: auth-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: auth-service
   ports:
     - name: auth-service
       port: 8080
-      targetPort: 8083
+      targetPort: 8080
