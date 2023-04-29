@@ -7,11 +7,16 @@ metadata:
     app: mail-service
     version: v1
 spec:
-  replicas: 3
   selector:
     matchLabels:
       app: mail-service
       version: v1
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:
